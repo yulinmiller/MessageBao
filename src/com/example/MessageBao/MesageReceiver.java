@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by 麟 on 2014/9/26.
@@ -32,15 +29,16 @@ public class MesageReceiver extends BroadcastReceiver {
         try {
             Connection conn = null;
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.1.5:1521:XXB", "sysdba", "Oracle123");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@yulinmiller.vicp.cc:1521:XXB", "lliyu", "Oracle123");
             Statement statement = conn.createStatement();
+            String sqlstate = "insert into test_table (name,message) values("+address+","+fullMessage+")";
+            ResultSet resultSet = statement.executeQuery(sqlstate);
             
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
     }
 }
